@@ -1,4 +1,5 @@
-﻿using TPVY.API.Ecommerce.Models;
+﻿using TPVY.API.Ecommerce.DTOs;
+using TPVY.API.Ecommerce.Models;
 using TPVY.API.Ecommerce.Repositories.Interfaces;
 using TPVY.API.Ecommerce.Services.Interfaces;
 
@@ -23,8 +24,19 @@ namespace TPVY.API.Ecommerce.Services
             return await _productoRepository.ObtenerPorIdAsync(id);
         }
 
-        public async Task<Producto> CrearAsync(Producto producto)
+        public async Task<Producto> CrearAsync(RegistrerProductoDTO productoDTO)
         {
+            Producto producto = new Producto()
+            {
+                Activo = productoDTO.Activo,
+                CategoriaId = productoDTO.CategoriaID,
+                Descripcion = productoDTO.Descripcion,
+                ImagenUrl = productoDTO.imagenUrl,
+                Nombre = productoDTO.Nombre,
+                Precio = productoDTO.Precio,
+                Stock = productoDTO.Stock
+            };
+
             return await _productoRepository.CrearAsync(producto);
         }
 

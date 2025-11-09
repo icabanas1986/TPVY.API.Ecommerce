@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TPVY.API.Ecommerce.DTOs;
 using TPVY.API.Ecommerce.Models;
 using TPVY.API.Ecommerce.Services.Interfaces;
 
@@ -35,7 +36,7 @@ namespace TPVY.API.Ecommerce.Controllers
 
         [HttpPost]
         [Route("Crear")]
-        public async Task<IActionResult> Create([FromBody] Producto producto)
+        public async Task<IActionResult> Create([FromBody] RegistrerProductoDTO producto)
         {
             var nuevoProducto = await _productoService.CrearAsync(producto);
             return CreatedAtAction(nameof(GetById), new { id = nuevoProducto.Id }, nuevoProducto);
@@ -57,5 +58,6 @@ namespace TPVY.API.Ecommerce.Controllers
             await _productoService.EliminarAsync(id);
             return NoContent();
         }
+
     }
 }

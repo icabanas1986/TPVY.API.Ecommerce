@@ -1,4 +1,5 @@
-﻿using TPVY.API.Ecommerce.Models;
+﻿using TPVY.API.Ecommerce.DTOs;
+using TPVY.API.Ecommerce.Models;
 
 namespace TPVY.API.Ecommerce.Services.Interfaces
 {
@@ -6,7 +7,7 @@ namespace TPVY.API.Ecommerce.Services.Interfaces
     {
         Task<IEnumerable<Producto>> ObtenerTodosAsync();
         Task<Producto> ObtenerPorIdAsync(int id);
-        Task<Producto> CrearAsync(Producto producto);
+        Task<Producto> CrearAsync(RegistrerProductoDTO producto);
         Task ActualizarAsync(Producto producto);
         Task EliminarAsync(int id);
     }
