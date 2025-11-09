@@ -1,0 +1,6 @@
+@TPVY.API.Ecommerce_HostAddress = http://localhost:5118
+
+GET {{TPVY.API.Ecommerce_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
