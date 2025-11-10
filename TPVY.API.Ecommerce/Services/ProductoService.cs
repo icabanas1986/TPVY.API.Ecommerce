@@ -40,8 +40,19 @@ namespace TPVY.API.Ecommerce.Services
             return await _productoRepository.CrearAsync(producto);
         }
 
-        public async Task ActualizarAsync(Producto producto)
+        public async Task ActualizarAsync(UpdateProductoDTO productoDTO)
         {
+            Producto producto = new Producto()
+            {
+                Activo = productoDTO.Activo,
+                CategoriaId = productoDTO.CategoriaID,
+                Descripcion = productoDTO.Descripcion,
+                ImagenUrl = productoDTO.imagenUrl,
+                Nombre = productoDTO.Nombre,
+                Precio = productoDTO.Precio,
+                Stock = productoDTO.Stock,
+                Id = productoDTO.Id
+            };
             await _productoRepository.ActualizarAsync(producto);
         }
 

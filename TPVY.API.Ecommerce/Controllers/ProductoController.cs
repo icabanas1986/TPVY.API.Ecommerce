@@ -43,7 +43,7 @@ namespace TPVY.API.Ecommerce.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Producto producto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductoDTO producto)
         {
             if (id != producto.Id)
                 return BadRequest();

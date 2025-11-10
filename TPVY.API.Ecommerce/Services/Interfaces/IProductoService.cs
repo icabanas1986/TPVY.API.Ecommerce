@@ -8,7 +8,7 @@ namespace TPVY.API.Ecommerce.Services.Interfaces
         Task<IEnumerable<Producto>> ObtenerTodosAsync();
         Task<Producto> ObtenerPorIdAsync(int id);
         Task<Producto> CrearAsync(RegistrerProductoDTO producto);
-        Task ActualizarAsync(Producto producto);
+        Task ActualizarAsync(UpdateProductoDTO producto);
         Task EliminarAsync(int id);
     }
 }
