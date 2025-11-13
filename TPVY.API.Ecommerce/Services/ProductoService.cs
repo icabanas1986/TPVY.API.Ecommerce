@@ -1,4 +1,4 @@
-﻿using TPVY.API.Ecommerce.DTOs;
+﻿using TPVY.API.Ecommerce.DTOs.Producto;
 using TPVY.API.Ecommerce.Models;
 using TPVY.API.Ecommerce.Repositories.Interfaces;
 using TPVY.API.Ecommerce.Services.Interfaces;

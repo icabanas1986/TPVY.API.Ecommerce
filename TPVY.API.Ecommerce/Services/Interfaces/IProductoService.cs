@@ -1,4 +1,4 @@
-﻿using TPVY.API.Ecommerce.DTOs;
+﻿using TPVY.API.Ecommerce.DTOs.Producto;
 using TPVY.API.Ecommerce.Models;
 
 namespace TPVY.API.Ecommerce.Services.Interfaces

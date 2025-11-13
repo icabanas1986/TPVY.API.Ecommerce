@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TPVY.API.Ecommerce.Data;
 using TPVY.API.Ecommerce.Models;
+using TPVY.API.Ecommerce.Repositories.Interfaces;
 
-namespace TPVY.API.Ecommerce.Repositories.Interfaces
+namespace TPVY.API.Ecommerce.Repositories
 {
     public class ProductoRepository :IProductoRepository
     {
