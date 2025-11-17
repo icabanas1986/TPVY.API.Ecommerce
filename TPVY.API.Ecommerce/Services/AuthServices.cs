@@ -46,6 +46,28 @@ namespace TPVY.API.Ecommerce.Services
             return GenerarToken(usuario);
         }
 
+        public async Task<bool> EliminaUsuario(int id)
+        {
+            return await _repository.EliminaUsuario(id);
+        }
+        
+        public async Task<bool> ActualizaUsuario(int Id, string Nombre, string Email, int RolId, string Password)
+        {
+            UsuariosAuth usuarios  = new UsuariosAuth()
+            {
+                Id = Id,
+                Nombre = Nombre,
+                Email = Email,
+                RolId = RolId,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Password)
+            };
+            return await _repository.ActualizaUsuario(usuarios);
+        }
+
+        public async Task<List<UsuariosAuth>> ObtenerUsuarios()
+        {
+            return await _repository.ObtenerUsuarios();
+        }
         private string GenerarToken(UsuariosAuth usuario)
         {
             var claims = new[]
@@ -68,5 +90,6 @@ namespace TPVY.API.Ecommerce.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        
     }
 }

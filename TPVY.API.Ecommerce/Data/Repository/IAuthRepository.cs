@@ -8,5 +8,9 @@ namespace TPVY.API.Ecommerce.Data.Repository
         Task<UsuariosAuth> ObtieneUsuarioPorId(int id);
         Task<bool> ObtieneUsuarioPorCorreo(string correo);
         Task<UsuariosAuth?> GetByEmailAsync(string email);
+        Task<bool> EliminaUsuario(int id);
+
+        Task<bool> ActualizaUsuario(UsuariosAuth auth);
+        Task<List<UsuariosAuth>> ObtenerUsuarios();
     }
 }

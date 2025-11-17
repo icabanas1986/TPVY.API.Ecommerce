@@ -73,5 +73,52 @@ namespace TPVY.API.Ecommerce.Data.Repository
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
+
+        public async Task<bool> EliminaUsuario(int id)
+        {
+            bool eliminado = false;
+            try
+            {
+                var user = await _context.UsuariosAuth.FindAsync(id);
+                if (user != null)
+                {
+                    _context.UsuariosAuth.Remove(user);
+                    int res = await _context.SaveChangesAsync();
+                    if (res > 0)
+                    {
+                        eliminado = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                eliminado = false;
+            }
+            return eliminado;
+        }
+
+        public async Task<bool> ActualizaUsuario(UsuariosAuth auth)
+        {
+            bool actualizado = false;
+            try
+            {
+                _context.UsuariosAuth.Update(auth);
+                int res = await _context.SaveChangesAsync();
+                if (res > 0)
+                {
+                    actualizado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                actualizado = false;
+            }
+            return actualizado;
+        }
+
+        public async Task<List<UsuariosAuth>> ObtenerUsuarios()
+        {
+            return await _context.UsuariosAuth.Include(u => u.Rol).ToListAsync();
+        }
     }
 }
