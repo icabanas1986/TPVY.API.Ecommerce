@@ -17,5 +17,7 @@ namespace TPVY.API.Ecommerce.Models
         // Relación con Categoría
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
+
+        public List<ProductoImagen> Imagenes { get; set; } = new();
     }
 }

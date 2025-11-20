@@ -31,7 +31,7 @@ namespace TPVY.API.Ecommerce.Services
                 Activo = productoDTO.Activo,
                 CategoriaId = productoDTO.CategoriaID,
                 Descripcion = productoDTO.Descripcion,
-                ImagenUrl = productoDTO.imagenUrl,
+                //ImagenUrl = productoDTO.imagenUrl,
                 Nombre = productoDTO.Nombre,
                 Precio = productoDTO.Precio,
                 Stock = productoDTO.Stock
