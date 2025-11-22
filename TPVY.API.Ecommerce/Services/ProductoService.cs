@@ -12,11 +12,12 @@ namespace TPVY.API.Ecommerce.Services
     {
         private readonly IProductoRepository _productoRepository;
         private readonly IProductoImagenesRepository _productoImagenesRepository;
-
-        public ProductoService(IProductoRepository productoRepository,IProductoImagenesRepository productoImagenesRepository)
+        private readonly ILogger<ProductoService> _logger;
+        public ProductoService(IProductoRepository productoRepository,IProductoImagenesRepository productoImagenesRepository, ILogger<ProductoService> logger)
         {
             _productoRepository = productoRepository;
             _productoImagenesRepository = productoImagenesRepository;
+            _logger = logger;
         }
 
         public async Task<List<ObtieneProductoDTO>> ObtenerTodosAsync()
@@ -113,9 +114,11 @@ namespace TPVY.API.Ecommerce.Services
             var eliminaImagenes = await _productoImagenesRepository.EliminaImagenesPorIdProductoAsync(productoDTO.Id);
             if(!eliminaImagenes)
             {
+                _logger.LogError("No se pudieron eliminar las imagenes del producto con Id: {ProductoId}", productoDTO.Id);
                 throw new Exception("No se puede actualizar las imagenes");
             }
             var urls = this.GuardaImagenes(productoDTO.Imagenes, env);
+            _logger.LogInformation("Actualizando el producto con Id: {ProductoId}", productoDTO.Id);
 
             Producto producto = new Producto()
             {
@@ -155,28 +158,39 @@ namespace TPVY.API.Ecommerce.Services
         public async Task<List<string>> GuardaImagenes(List<IFormFile> archivos, [FromServices] IWebHostEnvironment env)
         {
             List<string> imagenUrls = new List<string>();
-            var rutaBase = env.ContentRootPath;
-            string uploadsFolder = Path.Combine(rutaBase, "imagenes_productos");
-            if (!Directory.Exists(uploadsFolder))
+            try
             {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            foreach (var file in archivos)
-            {
-                string fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-                string filePath = Path.Combine(uploadsFolder, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                var rutaBase = env.ContentRootPath;
+                string uploadsFolder = Path.Combine(rutaBase, "imagenes_productos");
+                _logger.LogInformation("Guardando imagenes en la ruta: {UploadsFolder}", uploadsFolder);
+                if (!Directory.Exists(uploadsFolder))
                 {
-                    await file.CopyToAsync(stream);
+                    _logger.LogInformation("La carpeta no existe. Creando carpeta en la ruta: {UploadsFolder}", uploadsFolder);
+                    Directory.CreateDirectory(uploadsFolder);
                 }
 
-                // Guardar la URL relativa en la BD
-                //imagenUrls.Add($"/imagenes_productos/{fileName}");
-                imagenUrls.Add(filePath);
+                foreach (var file in archivos)
+                {
+                    _logger.LogInformation("Guardando imagen: {FileName}", file.FileName);
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                    _logger.LogInformation("Nombre del archivo generado: {FileName}", fileName);
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+                    _logger.LogInformation("Ruta completa del archivo: {FilePath}", filePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    _logger.LogInformation("Imagen guardada exitosamente: {FilePath}", filePath);
+                    imagenUrls.Add(filePath);
+                }
+                return imagenUrls;
             }
-            return imagenUrls;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al guardar las imagenes.");
+                throw;
+            }
+            
         }
     }
 }
