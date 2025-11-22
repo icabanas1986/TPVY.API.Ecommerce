@@ -55,6 +55,7 @@ builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<IRolService, RolService>();
+builder.Services.AddScoped<IProductoImagenesRepository, ProductoImagenesRepository>();
 
 // ================= SWAGGER =================
 builder.Services.AddEndpointsApiExplorer();

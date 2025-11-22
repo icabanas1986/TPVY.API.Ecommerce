@@ -36,19 +36,19 @@ namespace TPVY.API.Ecommerce.Controllers
 
         [HttpPost]
         [Route("Crear")]
-        public async Task<IActionResult> Create([FromBody] RegistrerProductoDTO producto)
+        public async Task<IActionResult> Create([FromForm] RegistrerProductoDTO producto, [FromServices] IWebHostEnvironment env)
         {
-            var nuevoProducto = await _productoService.CrearAsync(producto);
-            return CreatedAtAction(nameof(GetById), new { id = nuevoProducto.Id }, nuevoProducto);
+            if (producto.Imagenes == null || producto.Imagenes.Count == 0)
+                return BadRequest("Debe enviar al menos una imagen.");
+
+            var nuevoProducto = await _productoService.CrearAsync(producto,env);
+            return CreatedAtAction(nameof(GetById), new { id = nuevoProducto.IdProducto }, nuevoProducto);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductoDTO producto)
+        [HttpPut("actualizar")]
+        public async Task<IActionResult> Update([FromForm] UpdateProductoDTO producto, [FromServices] IWebHostEnvironment env)
         {
-            if (id != producto.Id)
-                return BadRequest();
-
-            await _productoService.ActualizarAsync(producto);
+            await _productoService.ActualizarAsync(producto,env);
             return NoContent();
         }
 

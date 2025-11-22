@@ -17,6 +17,7 @@
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.1.0" />
+<Content Include="wwwroot\**" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
